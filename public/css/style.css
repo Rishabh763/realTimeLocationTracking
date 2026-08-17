@@ -1,0 +1,118 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+#main {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+#map {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+#box {
+  display: none;
+  flex-direction: column;
+  row-gap: 7px;
+  z-index: 2;
+  position: absolute;
+  top: 4rem;
+  right: 2rem;
+  text-decoration: none;
+  background-color: skyblue;
+  padding: 0.5rem;
+  border-radius: 4px;
+  list-style: none;
+  padding-right: 2rem;
+}
+#box li {
+  list-style: none;
+  cursor: pointer;
+}
+
+#routeBtn {
+  padding: 5px;
+  width: 4rem;
+  border-radius: 5px;
+}
+#reroute {
+  padding: 4px;
+  width: 2rem;
+  border-radius: 3px;
+  display: none;
+}
+
+#distance-box {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+  column-gap: 2px;
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: skyblue;
+  padding: 1rem;
+  border-radius: 1rem;
+  z-index: 2;
+}
+
+#users {
+  z-index: 2;
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  background-color: skyblue;
+  border-radius: 1rem;
+  top: 2rem;
+  right: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+#location {
+  z-index: 2;
+  width: max-content;
+  padding: 1rem;
+  height: 2rem;
+  border-radius: 1rem;
+  background-color: red;
+  position: absolute;
+  margin-top: 2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+#message {
+  z-index: 2;
+  display: none;
+  padding: 1rem;
+  background-color: red;
+  width: max-content;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
