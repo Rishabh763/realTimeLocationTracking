@@ -24,7 +24,7 @@ app.set("views", path.join(ROOT, "views"));
 app.use((req, res, next) => {
   res.set({
     "X-Content-Type-Options": "nosniff",
-    "Referrer-Policy": "same-origin",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
     "Permissions-Policy": "geolocation=(self)",
   });
   next();
