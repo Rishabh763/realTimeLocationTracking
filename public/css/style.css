@@ -1,118 +1,251 @@
-* {
+:root {
+  --bg: #ffffff;
+  --fg: #1f2933;
+  --muted: #616e7c;
+  --accent: #2563eb;
+  --accent-fg: #ffffff;
+  --danger: #b91c1c;
+  --warn: #92400e;
+  --warn-bg: #fef3c7;
+  --radius: 10px;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 html,
-body {
-  width: 100%;
-  height: 100%;
-}
-#main {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
+body,
 #map {
   width: 100%;
   height: 100%;
-  z-index: 1;
 }
 
-#box {
-  display: none;
+body {
+  color: var(--fg);
+  overflow: hidden;
+}
+
+button,
+select,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: 1px solid #cbd2d9;
+  background: var(--bg);
+  border-radius: 6px;
+  padding: 0.4rem 0.75rem;
+}
+
+button:hover {
+  background: #f0f4f8;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.panel {
+  position: absolute;
+  z-index: 1000;
+  background: var(--bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* Join overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(15, 23, 42, 0.55);
+}
+
+.card {
+  width: min(100%, 24rem);
+  display: flex;
   flex-direction: column;
-  row-gap: 7px;
-  z-index: 2;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  background: var(--bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.card h1 {
+  font-size: 1.4rem;
+}
+
+.card input {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #cbd2d9;
+  border-radius: 6px;
+}
+
+.card button[type="submit"] {
+  padding: 0.65rem;
+  border: none;
+  background: var(--accent);
+  color: var(--accent-fg);
+  font-weight: 600;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.error {
+  color: var(--danger);
+  font-size: 0.9rem;
+}
+
+/* Top bar and user list */
+#top-bar {
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.4rem;
+}
+
+#user-list {
+  top: 4.2rem;
+  left: 1rem;
+  min-width: 12rem;
+  max-height: 50vh;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0.3rem 0;
+}
+
+#user-list li button {
+  width: 100%;
+  text-align: left;
+  border: none;
+  border-radius: 0;
+  padding: 0.5rem 1rem;
+}
+
+/* Banners */
+.banner {
   position: absolute;
-  top: 4rem;
-  right: 2rem;
-  text-decoration: none;
-  background-color: skyblue;
-  padding: 0.5rem;
-  border-radius: 4px;
-  list-style: none;
-  padding-right: 2rem;
-}
-#box li {
-  list-style: none;
-  cursor: pointer;
-}
-
-#routeBtn {
-  padding: 5px;
-  width: 4rem;
-  border-radius: 5px;
-}
-#reroute {
-  padding: 4px;
-  width: 2rem;
-  border-radius: 3px;
-  display: none;
-}
-
-#distance-box {
-  width: max-content;
+  z-index: 1000;
+  top: 4.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: calc(100% - 2rem);
   display: flex;
   align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius);
+  background: var(--fg);
+  color: #fff;
+  box-shadow: var(--shadow);
+  font-size: 0.9rem;
+}
+
+.banner.error-banner {
+  background: var(--danger);
+}
+
+.banner.warn {
+  top: 1rem;
+  background: var(--warn-bg);
+  color: var(--warn);
+}
+
+.banner button {
+  flex-shrink: 0;
+}
+
+#recenter-btn {
+  right: 1rem;
+  bottom: 8rem;
+  padding: 0.5rem 0.9rem;
+}
+
+/* Route panel */
+#route-panel {
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: calc(100% - 2rem);
+  padding: 0.75rem;
+}
+
+.route-row {
+  display: flex;
   flex-wrap: wrap;
-  flex-direction: row;
-  column-gap: 2px;
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: skyblue;
-  padding: 1rem;
-  border-radius: 1rem;
-  z-index: 2;
-}
-
-#users {
-  z-index: 2;
-  width: 2rem;
-  height: 2rem;
-  position: absolute;
-  background-color: skyblue;
-  border-radius: 1rem;
-  top: 2rem;
-  right: 2rem;
-  display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+  gap: 0.5rem;
 }
 
-#location {
-  z-index: 2;
-  width: max-content;
-  padding: 1rem;
-  height: 2rem;
-  border-radius: 1rem;
-  background-color: red;
-  position: absolute;
-  margin-top: 2rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  box-shadow:
-    rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
-    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+.route-row select {
+  max-width: 9rem;
+  padding: 0.35rem;
+  border: 1px solid #cbd2d9;
+  border-radius: 6px;
+  background: var(--bg);
 }
 
-#message {
-  z-index: 2;
+#route-info {
+  margin-top: 0.4rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+#route-info:empty {
   display: none;
-  padding: 1rem;
-  background-color: red;
-  width: max-content;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+}
+
+/* Name labels on markers */
+.name-label {
+  font-weight: 600;
+}
+
+.name-label.me {
+  color: var(--accent);
+}
+
+@media (max-width: 480px) {
+  /* Keep the attribution visible and leave room for the panel on small screens */
+  #route-panel {
+    bottom: 1.75rem;
+  }
+
+  #recenter-btn {
+    bottom: 9.5rem;
+  }
+
+  /* Phones zoom with pinch gestures; the buttons would sit under the route panel */
+  .leaflet-control-zoom {
+    display: none;
+  }
+
+  .route-row select {
+    max-width: 7rem;
+  }
 }

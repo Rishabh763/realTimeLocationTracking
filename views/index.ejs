@@ -3,55 +3,62 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Real-Time Tracking</title>
+    <meta name="description" content="Share your live location with a group and get directions between members." />
+    <title>Real-Time Location Tracking</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%232563eb' d='M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="/vendor/leaflet/leaflet.css" />
+    <link rel="stylesheet" href="/vendor/leaflet-routing-machine/leaflet-routing-machine.css" />
     <link rel="stylesheet" href="/css/style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"
-      integrity="sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css"
-    />
   </head>
   <body>
-    <div id="main">
-      <div id="users">0</div>
-      <div id="location">↻ Retry</div>
-      <div id="message">Location Access Denied, Please Allow</div>
-      <div id="box"></div>
-      <div id="map"></div>
-      <div id="distance-box">
-        <div id="from">
-          <select name="user1" id="user1">
-            <option value="" disabled selected>select User1</option>
-          </select>
-        </div>
-        <div>&#8596;</div>
-        <div id="to">
-          <select name="user2" id="user2">
-            <option value="" disabled selected>select User2</option>
-          </select>
-        </div>
-        <button id="routeBtn">route</button>
-        <button id="reroute">↺</button>
-      </div>
+    <div id="map" aria-label="Map of group members"></div>
+
+    <div id="join-overlay" class="overlay">
+      <form id="join-form" class="card" novalidate>
+        <h1>Live Location</h1>
+        <p class="muted">
+          Room <strong id="room-label"></strong>. Anyone with this room's link can see your
+          live location while this tab is open.
+        </p>
+        <label for="name-input">Your name</label>
+        <input id="name-input" maxlength="30" autocomplete="nickname" placeholder="e.g. Rishabh" required />
+        <button type="submit" id="join-btn">Join and share location</button>
+        <p id="join-error" class="error" role="alert" hidden></p>
+      </form>
     </div>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet-src.min.js"
-      integrity="sha512-3/WyQrhTdqSVmSifQS62akgtNBhZha2lS44TnoN9Jk3J01FvsKK4suVmz6t5FtccGb5iJw58GoFhBjPE5EPc8Q=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.min.js"></script>
-    <script
-      src="https://cdn.socket.io/4.8.1/socket.io.min.js"
-      integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+"
-      crossorigin="anonymous"
-    ></script>
+
+    <div id="top-bar" class="panel">
+      <button id="users-toggle" type="button" aria-expanded="false" aria-controls="user-list">
+        <span id="user-count">0</span> online
+      </button>
+      <button id="share-btn" type="button">Share link</button>
+    </div>
+    <ul id="user-list" class="panel" hidden></ul>
+
+    <div id="status" class="banner" role="status" hidden>
+      <span id="status-text"></span>
+      <button id="retry-btn" type="button" hidden>Retry</button>
+    </div>
+    <div id="conn-status" class="banner warn" role="status" hidden>Connection lost, reconnecting...</div>
+
+    <button id="recenter-btn" class="panel" type="button" hidden>Re-center on me</button>
+
+    <div id="route-panel" class="panel">
+      <div class="route-row">
+        <select id="user1" aria-label="Route from"></select>
+        <span aria-hidden="true">&#8596;</span>
+        <select id="user2" aria-label="Route to"></select>
+        <button id="route-btn" type="button">Route</button>
+      </div>
+      <div id="route-info" aria-live="polite"></div>
+    </div>
+
+    <script src="/vendor/leaflet/leaflet.js"></script>
+    <script src="/vendor/leaflet-routing-machine/leaflet-routing-machine.min.js"></script>
+    <script src="/socket.io/socket.io.min.js"></script>
     <script src="/js/script.js"></script>
   </body>
 </html>
