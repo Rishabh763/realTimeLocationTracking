@@ -4,6 +4,11 @@ Share your live location with a group and get road directions between any two me
 
 Built with **Node.js**, **Express 5**, **Socket.IO** and **Leaflet** (OpenStreetMap tiles, OSRM routing).
 
+**Live demo:** https://realtime-location-tracking-5t0p.onrender.com
+(hosted on Render's free tier, so the first load after a quiet period can take about 30 s)
+
+![Live map showing a user's marker with the user count, share button and routing panel](docs/screenshot.png)
+
 ## Features
 
 - **Private rooms.** Opening the app creates a random room (`/?room=abc123xyz0`). Share the link to invite people; other rooms can't see you.
